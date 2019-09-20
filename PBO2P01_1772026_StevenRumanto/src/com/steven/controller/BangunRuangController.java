@@ -7,6 +7,11 @@ import javafx.scene.control.TextField;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+/**
+ * Steven Rumanto
+ * 1772026
+ */
+
 public class BangunRuangController {
     public TextField Panjang;
     public TextField Lebar;

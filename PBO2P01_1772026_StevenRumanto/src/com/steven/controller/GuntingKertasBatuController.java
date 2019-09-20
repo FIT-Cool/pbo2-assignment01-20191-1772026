@@ -10,6 +10,11 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
 
+/**
+ * Steven Rumanto
+ * 1772026
+ */
+
 public class GuntingKertasBatuController {
 
 
