@@ -57,7 +57,7 @@ public class MahasiswaDaoImpl implements DaoService<Mahasiswa> {
             ps.setDate(5, new java.sql.Date(object.getTanggalLahir().getTime()));
             ps.setString(6, object.getAlamat());
             ps.setString(7, object.getEmail());
-            ps.setString(8, object.getProgramStudi());
+            ps.setInt(8, object.getProgramStudi().getId());
             if(ps.executeUpdate() != 0)
             {
                 connection.commit();

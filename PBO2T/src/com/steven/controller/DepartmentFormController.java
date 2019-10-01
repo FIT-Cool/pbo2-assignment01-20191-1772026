@@ -53,6 +53,7 @@ private MahasiswaFormController mahasiswaFormController;
             p.setId(Integer.valueOf(txtID.getText()));
             p.setNama(txtNama.getText());
             departmentDao.addData(p);
+            departments.clear();
             departments.addAll(getDepartmentDao().showAll());
         }
         clear();

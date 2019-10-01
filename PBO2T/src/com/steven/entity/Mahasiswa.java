@@ -68,8 +68,8 @@ public class Mahasiswa {
         this.email = email;
     }
 
-    public String getProgramStudi() {
-        return String.valueOf(programStudi);
+    public ProgramStudi getProgramStudi() {
+        return programStudi;
     }
 
     public void setProgramStudi(ProgramStudi programStudi) {

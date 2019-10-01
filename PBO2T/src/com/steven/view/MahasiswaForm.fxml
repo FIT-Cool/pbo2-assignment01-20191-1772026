@@ -59,7 +59,7 @@
                   <TextField fx:id="txtTempatLahir" GridPane.columnIndex="3" />
                   <TextField fx:id="txtAlamat" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <TextField fx:id="txtEmail" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <ComboBox prefHeight="25.0" prefWidth="179.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="comboProgramStudi" prefHeight="25.0" prefWidth="179.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <DatePicker fx:id="txtTanggalLahir" prefHeight="25.0" prefWidth="208.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                     </children>
                 </GridPane>
@@ -71,7 +71,7 @@
                         <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteAction" text="Delete" />
                     </children>
                 </HBox>
-                <TableView fx:id="tablePS" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tablePS" onMouseClicked="#tableClicked" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colID" prefWidth="32.0" text="ID" />
                         <TableColumn fx:id="colNamaDepan" prefWidth="115.0" text="Nama Depan" />

@@ -1,7 +1,9 @@
 package com.steven.controller;
 
+import com.steven.dao.DepartmentDaoImpl;
 import com.steven.dao.MahasiswaDaoImpl;
 import com.steven.entity.Mahasiswa;
+import com.steven.entity.ProgramStudi;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -9,8 +11,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class MahasiswaFormController implements Initializable {
@@ -30,23 +36,25 @@ public class MahasiswaFormController implements Initializable {
     public TableColumn<Mahasiswa, String> colNamaDepan;
     public TableColumn<Mahasiswa, String> colNamaBelakang;
     public TableColumn<Mahasiswa, String> colTempatLahir;
-    public TableColumn<Mahasiswa, String> colTanggalLahir;
+    public TableColumn<Mahasiswa, Date> colTanggalLahir;
     public TableColumn<Mahasiswa, String> colAlamat;
     public TableColumn<Mahasiswa, String> colEmail;
     public TableColumn<Mahasiswa, String> colProdi;
     public DatePicker txtTanggalLahir;
+    public ComboBox<ProgramStudi> comboProgramStudi;
+    private ObservableList<Mahasiswa> mahasiswas;
+    private MahasiswaDaoImpl mahasiswaDao;
+    private ObservableList<ProgramStudi> departments;
+    private DepartmentDaoImpl  departmentDao;
+    private Mahasiswa selectedItem;
 
     public ObservableList<Mahasiswa> getMahasiswa() {
-        if(students == null)
+        if(mahasiswas == null)
         {
-            students = FXCollections.observableArrayList();
-            students.addAll(getMahasiswaDao().showAll());
+            mahasiswas = FXCollections.observableArrayList();
+            mahasiswas.addAll(getMahasiswaDao().showAll());
         }
-        return students;
-    }
-
-    public void setStudents(ObservableList<Mahasiswa> students) {
-        this.students = students;
+        return mahasiswas;
     }
 
     public MahasiswaDaoImpl getMahasiswaDao() {
@@ -56,13 +64,25 @@ public class MahasiswaFormController implements Initializable {
         }
         return mahasiswaDao;
     }
-
-    public void setMahasiswaDao(MahasiswaDaoImpl mahasiswaDao) {
-        this.mahasiswaDao = mahasiswaDao;
+    public ObservableList<ProgramStudi> getDepartments() {
+        if(departments == null)
+        {
+            departments = FXCollections.observableArrayList();
+            departments.addAll(getDepartmentDao().showAll());
+        }
+        return departments;
     }
 
-    private ObservableList<Mahasiswa> students;
-    private MahasiswaDaoImpl mahasiswaDao;
+    public DepartmentDaoImpl getDepartmentDao() {
+        if(departmentDao == null)
+        {
+            departmentDao = new DepartmentDaoImpl();
+        }
+        return departmentDao;
+    }
+
+
+
 
     public void showMahasiswaAction(ActionEvent actionEvent) {
     }
@@ -90,8 +110,19 @@ public class MahasiswaFormController implements Initializable {
         colTanggalLahir.setCellValueFactory( data -> new SimpleStringProperty(String.valueOf(data.getValue().getTanggalLahir())));
         colAlamat.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getAlamat()));
         colEmail.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getEmail()));
-        colProdi.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getProgramStudi()));
+        colProdi.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getProgramStudi().toString()));
     }
 
 
+    public void tableClicked(MouseEvent mouseEvent) {
+        selectedItem=tablePS.getSelectionModel().getSelectedItem();
+        comboProgramStudi.setValue(selectedItem.getProgramStudi());
+        txtTanggalLahir.setValue(convert(selectedItem.getTanggalLahir()));
+
+    }
+    public LocalDate convert(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
 }

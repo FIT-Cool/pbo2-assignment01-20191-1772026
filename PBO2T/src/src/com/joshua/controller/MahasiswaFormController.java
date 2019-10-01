@@ -90,6 +90,6 @@ public class MahasiswaFormController implements Initializable {
         colTanggalLahir.setCellValueFactory( data -> new SimpleStringProperty(String.valueOf(data.getValue().getTanggalLahir())));
         colAlamat.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getAlamat()));
         colEmail.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getEmail()));
-        colProdi.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getProgramStudi()));
+        colProdi.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getProgramStudi().getNama()));
     }
 }

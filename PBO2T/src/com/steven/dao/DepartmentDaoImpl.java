@@ -18,6 +18,7 @@ public class DepartmentDaoImpl implements DaoService<ProgramStudi> {
         List<ProgramStudi> departments = new ArrayList<>();
         try {
             Connection connection = DBHelper.createMySQLConnection();
+
             String query = "SELECT * FROM program_studi";
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
