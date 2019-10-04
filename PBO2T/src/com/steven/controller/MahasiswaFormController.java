@@ -14,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -36,7 +38,7 @@ public class MahasiswaFormController implements Initializable {
     public TableColumn<Mahasiswa, String> colNamaDepan;
     public TableColumn<Mahasiswa, String> colNamaBelakang;
     public TableColumn<Mahasiswa, String> colTempatLahir;
-    public TableColumn<Mahasiswa, Date> colTanggalLahir;
+    public TableColumn<Mahasiswa, String> colTanggalLahir;
     public TableColumn<Mahasiswa, String> colAlamat;
     public TableColumn<Mahasiswa, String> colEmail;
     public TableColumn<Mahasiswa, String> colProdi;
@@ -45,12 +47,11 @@ public class MahasiswaFormController implements Initializable {
     private ObservableList<Mahasiswa> mahasiswas;
     private MahasiswaDaoImpl mahasiswaDao;
     private ObservableList<ProgramStudi> departments;
-    private DepartmentDaoImpl  departmentDao;
+    private DepartmentDaoImpl departmentDao;
     private Mahasiswa selectedItem;
 
     public ObservableList<Mahasiswa> getMahasiswa() {
-        if(mahasiswas == null)
-        {
+        if (mahasiswas == null) {
             mahasiswas = FXCollections.observableArrayList();
             mahasiswas.addAll(getMahasiswaDao().showAll());
         }
@@ -58,15 +59,14 @@ public class MahasiswaFormController implements Initializable {
     }
 
     public MahasiswaDaoImpl getMahasiswaDao() {
-        if(mahasiswaDao == null)
-        {
+        if (mahasiswaDao == null) {
             mahasiswaDao = new MahasiswaDaoImpl();
         }
         return mahasiswaDao;
     }
+
     public ObservableList<ProgramStudi> getDepartments() {
-        if(departments == null)
-        {
+        if (departments == null) {
             departments = FXCollections.observableArrayList();
             departments.addAll(getDepartmentDao().showAll());
         }
@@ -74,17 +74,15 @@ public class MahasiswaFormController implements Initializable {
     }
 
     public DepartmentDaoImpl getDepartmentDao() {
-        if(departmentDao == null)
-        {
+        if (departmentDao == null) {
             departmentDao = new DepartmentDaoImpl();
         }
         return departmentDao;
     }
 
 
-
-
     public void showMahasiswaAction(ActionEvent actionEvent) {
+
     }
 
     public void saveAction(ActionEvent actionEvent) {
@@ -103,23 +101,29 @@ public class MahasiswaFormController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tablePS.setItems(getMahasiswa());
-        colID.setCellValueFactory( data ->   new SimpleIntegerProperty(data.getValue().getId()).asObject());
-        colNamaDepan.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getNamaDepan()));
-        colNamaBelakang.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getNamaBelakang()));
-        colTempatLahir.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getTempatLahir()));
-        colTanggalLahir.setCellValueFactory( data -> new SimpleStringProperty(String.valueOf(data.getValue().getTanggalLahir())));
-        colAlamat.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getAlamat()));
-        colEmail.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getEmail()));
-        colProdi.setCellValueFactory( data -> new SimpleStringProperty(data.getValue().getProgramStudi().toString()));
+        comboProgramStudi.setItems(getDepartments());
+        colID.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getId()).asObject());
+        colNamaDepan.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNamaDepan()));
+        colNamaBelakang.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNamaBelakang()));
+        colTempatLahir.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTempatLahir()));
+
+        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+        colTanggalLahir.setCellValueFactory(data -> {
+            return new SimpleStringProperty(dateFormat.format(data.getValue().getTanggalLahir()));
+        });
+        colAlamat.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAlamat()));
+        colEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmail()));
+        colProdi.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getProgramStudi().toString()));
     }
 
 
     public void tableClicked(MouseEvent mouseEvent) {
-        selectedItem=tablePS.getSelectionModel().getSelectedItem();
+        selectedItem = tablePS.getSelectionModel().getSelectedItem();
         comboProgramStudi.setValue(selectedItem.getProgramStudi());
         txtTanggalLahir.setValue(convert(selectedItem.getTanggalLahir()));
 
     }
+
     public LocalDate convert(Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
