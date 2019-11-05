@@ -31,6 +31,7 @@ public class MahasiswaDaoImpl implements DaoService<Mahasiswa> {
             transaction.commit();
             result = 1;
         } catch (HibernateException e) {
+            System.out.println(e.getMessage());
             transaction.rollback();
         }
         session.clear();

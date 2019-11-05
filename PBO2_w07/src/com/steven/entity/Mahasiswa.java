@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.Objects;
 
 @Entity
+@Table(name = "mahasiswa", schema = "pbo220191", catalog = "")
 public class Mahasiswa {
     private String id;
     private String namaDepan;
@@ -13,7 +14,6 @@ public class Mahasiswa {
     private Date tanggalLahir;
     private String alamat;
     private String email;
-    private int programStudiId;
     private ProgramStudi programStudiByProgramStudiId;
 
     @Id
@@ -90,20 +90,19 @@ public class Mahasiswa {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Mahasiswa mahasiswa = (Mahasiswa) o;
-        return programStudiId == mahasiswa.programStudiId &&
-                Objects.equals(id, mahasiswa.id) &&
-                Objects.equals(namaDepan, mahasiswa.namaDepan) &&
-                Objects.equals(namaBelakang, mahasiswa.namaBelakang) &&
-                Objects.equals(tempatLahir, mahasiswa.tempatLahir) &&
-                Objects.equals(tanggalLahir, mahasiswa.tanggalLahir) &&
-                Objects.equals(alamat, mahasiswa.alamat) &&
-                Objects.equals(email, mahasiswa.email);
+        Mahasiswa that = (Mahasiswa) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(namaDepan, that.namaDepan) &&
+                Objects.equals(namaBelakang, that.namaBelakang) &&
+                Objects.equals(tempatLahir, that.tempatLahir) &&
+                Objects.equals(tanggalLahir, that.tanggalLahir) &&
+                Objects.equals(alamat, that.alamat) &&
+                Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, namaDepan, namaBelakang, tempatLahir, tanggalLahir, alamat, email, programStudiId);
+        return Objects.hash(id, namaDepan, namaBelakang, tempatLahir, tanggalLahir, alamat, email);
     }
 
     @ManyToOne

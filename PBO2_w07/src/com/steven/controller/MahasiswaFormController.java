@@ -85,6 +85,27 @@ public class MahasiswaFormController implements Initializable {
     }
 
     public void saveAction(ActionEvent actionEvent) {
+        Mahasiswa m = new Mahasiswa();
+        boolean notDuplicate = getMahasiswa().stream().filter(d -> d.getId() == m.getId()).count() == 0;
+        if (notDuplicate) {
+            m.setId(txtIDMahasiswa.getText().trim());
+            m.setNamaDepan(txtNamaDepan.getText());
+            m.setNamaBelakang(txtNamaBelakang.getText());
+            m.setAlamat(txtAlamat.getText());
+            m.setEmail(txtEmail.getText());
+            m.setTempatLahir(txtTempatLahir.getText());
+            ProgramStudi p=new ProgramStudi();
+            p.setId(comboProgramStudi.getValue().getId());
+            p.setNama(comboProgramStudi.getValue().getNama());
+            m.setProgramStudiByProgramStudiId(p);
+            Date tanggalLahir = java.sql.Date.valueOf(txtTanggalLahir.getValue());
+            m.setTanggalLahir((java.sql.Date) tanggalLahir);
+            System.out.println("asdkfjhasf");
+            mahasiswaDao.addData(m);
+            mahasiswas.clear();
+            mahasiswas.addAll(getMahasiswaDao().showAll());
+        }
+//        clear();
     }
 
     public void resetAction(ActionEvent actionEvent) {

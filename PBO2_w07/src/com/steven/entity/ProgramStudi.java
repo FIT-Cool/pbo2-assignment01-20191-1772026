@@ -1,6 +1,7 @@
 package com.steven.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -8,6 +9,7 @@ import java.util.Objects;
 public class ProgramStudi {
     private int id;
     private String nama;
+    private Collection<Mahasiswa> mahasiswasById;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -43,6 +45,14 @@ public class ProgramStudi {
         return Objects.hash(id, nama);
     }
 
+    @OneToMany(mappedBy = "programStudiByProgramStudiId")
+    public Collection<Mahasiswa> getMahasiswasById() {
+        return mahasiswasById;
+    }
+
+    public void setMahasiswasById(Collection<Mahasiswa> mahasiswasById) {
+        this.mahasiswasById = mahasiswasById;
+    }
     @Override
     public String toString() {
         return nama;
