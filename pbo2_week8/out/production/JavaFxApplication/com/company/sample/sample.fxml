@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.sample.Controller">
+   <children>
+      <TextArea fx:id="textArea" layoutX="14.0" layoutY="14.0" prefHeight="278.0" prefWidth="571.0" />
+      <Button layoutX="98.0" layoutY="326.0" mnemonicParsing="false" onAction="#save" text="SAVE" />
+      <Button layoutX="395.0" layoutY="326.0" mnemonicParsing="false" onAction="#open" text="OPEN" />
+   </children>
+</AnchorPane>
